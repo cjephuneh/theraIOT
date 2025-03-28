@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Brain,
   Heart,
@@ -15,10 +15,10 @@ import {
   DollarSign,
   Code,
   Briefcase,
-  ArrowRight,
-} from "lucide-react";
+  ArrowRight
+} from 'lucide-react';
 
-function App() {
+function LandingPage() {
   const [videoPlaying, setVideoPlaying] = useState(false);
 
   return (
@@ -909,4 +909,4 @@ function App() {
   );
 }
 
-export default App;
+export default LandingPage;

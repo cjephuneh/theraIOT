@@ -55,23 +55,33 @@ function App() {
       {/* Video Modal */}
       {videoPlaying && (
         <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center">
-          <div className="relative w-full max-w-4xl mx-4">
+          <div className="relative w-full max-w-2xl mx-4 bg-white rounded-2xl overflow-hidden shadow-2xl">
             <button 
               onClick={() => setVideoPlaying(false)} 
-              className="absolute -top-12 right-0 text-white hover:text-purple-300"
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
             >
-              <X className="w-8 h-8" />
+              <X className="w-6 h-6" />
             </button>
-            <div className="aspect-video bg-black rounded-xl overflow-hidden">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                title="TheraIOT Demo Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+            <div className="p-12 text-center">
+              <div className="w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-8">
+                <Play className="text-purple-600 w-12 h-12" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">Demo Coming Soon</h3>
+              <p className="text-gray-600 mb-6">
+                Our product demo is currently in production. Sign up for our newsletter to be notified when it's ready!
+              </p>
+              <div className="max-w-md mx-auto">
+                <div className="flex">
+                  <input 
+                    type="email" 
+                    placeholder="Enter your email" 
+                    className="flex-grow px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                  <button className="bg-purple-600 text-white px-6 py-2 rounded-r-lg hover:bg-purple-700 transition font-medium">
+                    Notify Me
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -602,81 +612,79 @@ function App() {
         </div>
       </section>
 
-      // Add this section before the final CTA section:
+      {/* Investment Section */}
+      <section className="py-24 bg-gradient-to-b from-white to-blue-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <span className="inline-flex items-center gap-2 bg-blue-100 px-4 py-2 rounded-full mb-4">
+              <Briefcase className="text-blue-600 w-4 h-4" />
+              <span className="text-blue-800 font-medium">Partnership Opportunities</span>
+            </span>
+            <h3 className="text-4xl font-bold text-gray-800 mb-4">
+              Invest in the Future of Emotional Wellness
+            </h3>
+            <p className="text-xl text-gray-600">
+              Join us on our mission to revolutionize therapeutic technology and make emotional support accessible to all.
+            </p>
+          </div>
 
-{/* Investment Section */}
-<section className="py-24 bg-gradient-to-b from-white to-blue-50">
-  <div className="container mx-auto px-4">
-    <div className="max-w-3xl mx-auto text-center mb-16">
-      <span className="inline-flex items-center gap-2 bg-blue-100 px-4 py-2 rounded-full mb-4">
-        <Briefcase className="text-blue-600 w-4 h-4" />
-        <span className="text-blue-800 font-medium">Partnership Opportunities</span>
-      </span>
-      <h3 className="text-4xl font-bold text-gray-800 mb-4">
-        Invest in the Future of Emotional Wellness
-      </h3>
-      <p className="text-xl text-gray-600">
-        Join us on our mission to revolutionize therapeutic technology and make emotional support accessible to all.
-      </p>
-    </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition">
+              <div className="bg-purple-100 w-14 h-14 flex items-center justify-center rounded-full mb-6">
+                <DollarSign className="text-purple-600 w-6 h-6" />
+              </div>
+              <h4 className="text-xl font-bold mb-3">Financial Investor</h4>
+              <p className="text-gray-600 mb-6">Support TheraIOT with capital investment and become a stakeholder in our growth.</p>
+              <Link to="/invest" className="text-purple-600 font-medium flex items-center gap-2 hover:text-purple-800">
+                Learn More <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
 
-    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-      <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition">
-        <div className="bg-purple-100 w-14 h-14 flex items-center justify-center rounded-full mb-6">
-          <DollarSign className="text-purple-600 w-6 h-6" />
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition">
+              <div className="bg-purple-100 w-14 h-14 flex items-center justify-center rounded-full mb-6">
+                <Code className="text-purple-600 w-6 h-6" />
+              </div>
+              <h4 className="text-xl font-bold mb-3">Engineering Partner</h4>
+              <p className="text-gray-600 mb-6">Contribute your technical expertise to help develop our cutting-edge technology.</p>
+              <Link to="/invest" className="text-purple-600 font-medium flex items-center gap-2 hover:text-purple-800">
+                Learn More <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition">
+              <div className="bg-purple-100 w-14 h-14 flex items-center justify-center rounded-full mb-6">
+                <Briefcase className="text-purple-600 w-6 h-6" />
+              </div>
+              <h4 className="text-xl font-bold mb-3">Business Partnership</h4>
+              <p className="text-gray-600 mb-6">Explore strategic partnership opportunities with TheraIOT for market expansion.</p>
+              <Link to="/invest" className="text-purple-600 font-medium flex items-center gap-2 hover:text-purple-800">
+                Learn More <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition">
+              <div className="bg-purple-100 w-14 h-14 flex items-center justify-center rounded-full mb-6">
+                <Users className="text-purple-600 w-6 h-6" />
+              </div>
+              <h4 className="text-xl font-bold mb-3">Clinical Partner</h4>
+              <p className="text-gray-600 mb-6">Help shape our product by contributing to research and clinical testing.</p>
+              <Link to="/invest" className="text-purple-600 font-medium flex items-center gap-2 hover:text-purple-800">
+                Learn More <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <Link 
+              to="/invest" 
+              className="inline-flex items-center justify-center px-8 py-3 border-2 border-purple-600 text-purple-600 rounded-full font-medium hover:bg-purple-50 transition"
+            >
+              Explore All Investment Opportunities
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Link>
+          </div>
         </div>
-        <h4 className="text-xl font-bold mb-3">Financial Investor</h4>
-        <p className="text-gray-600 mb-6">Support TheraIOT with capital investment and become a stakeholder in our growth.</p>
-        <Link to="/invest" className="text-purple-600 font-medium flex items-center gap-2 hover:text-purple-800">
-          Learn More <ArrowRight className="w-4 h-4" />
-        </Link>
-      </div>
-
-      <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition">
-        <div className="bg-purple-100 w-14 h-14 flex items-center justify-center rounded-full mb-6">
-          <Code className="text-purple-600 w-6 h-6" />
-        </div>
-        <h4 className="text-xl font-bold mb-3">Engineering Partner</h4>
-        <p className="text-gray-600 mb-6">Contribute your technical expertise to help develop our cutting-edge technology.</p>
-        <Link to="/invest" className="text-purple-600 font-medium flex items-center gap-2 hover:text-purple-800">
-          Learn More <ArrowRight className="w-4 h-4" />
-        </Link>
-      </div>
-
-      <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition">
-        <div className="bg-purple-100 w-14 h-14 flex items-center justify-center rounded-full mb-6">
-          <Briefcase className="text-purple-600 w-6 h-6" />
-        </div>
-        <h4 className="text-xl font-bold mb-3">Business Partnership</h4>
-        <p className="text-gray-600 mb-6">Explore strategic partnership opportunities with TheraIOT for market expansion.</p>
-        <Link to="/invest" className="text-purple-600 font-medium flex items-center gap-2 hover:text-purple-800">
-          Learn More <ArrowRight className="w-4 h-4" />
-        </Link>
-      </div>
-
-      <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition">
-        <div className="bg-purple-100 w-14 h-14 flex items-center justify-center rounded-full mb-6">
-          <Users className="text-purple-600 w-6 h-6" />
-        </div>
-        <h4 className="text-xl font-bold mb-3">Clinical Partner</h4>
-        <p className="text-gray-600 mb-6">Help shape our product by contributing to research and clinical testing.</p>
-        <Link to="/invest" className="text-purple-600 font-medium flex items-center gap-2 hover:text-purple-800">
-          Learn More <ArrowRight className="w-4 h-4" />
-        </Link>
-      </div>
-    </div>
-
-    <div className="text-center mt-12">
-      <Link 
-        to="/invest" 
-        className="inline-flex items-center justify-center px-8 py-3 border-2 border-purple-600 text-purple-600 rounded-full font-medium hover:bg-purple-50 transition"
-      >
-        Explore All Investment Opportunities
-        <ArrowRight className="ml-2 w-5 h-5" />
-      </Link>
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* Final CTA Section */}
       <section className="py-20 bg-gradient-to-br from-purple-600 to-indigo-700 text-white">
