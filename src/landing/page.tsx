@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Brain,
@@ -15,11 +15,40 @@ import {
   DollarSign,
   Code,
   Briefcase,
-  ArrowRight
+  ArrowRight,
+  Menu,
+  ImageOff
 } from 'lucide-react';
+
+// Helper function to handle image loading errors
+const imgErrorHandler = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  e.currentTarget.src = "/placeholder.jpg"; // Fallback placeholder
+  e.currentTarget.onerror = null; // Prevent infinite error loops
+};
 
 function LandingPage() {
   const [videoPlaying, setVideoPlaying] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  
+  useEffect(() => {
+    // Set images as loaded after component mount
+    setImagesLoaded(true);
+  }, []);
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
+  // Define base URL for assets based on environment
+  const baseImageUrl = process.env.NODE_ENV === 'production' 
+    ? 'https://your-deployed-site.com/images' // Update with your actual production URL
+    : '';
+
+  // Helper function for image paths
+  const getImagePath = (imageName: string) => {
+    return `${baseImageUrl}/${imageName}`;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
@@ -63,15 +92,89 @@ function LandingPage() {
                 Contact
               </Link>
             </div>
-            <Link
-              to="/preorder"
-              className="bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition flex items-center gap-2 font-medium"
-            >
-              Pre-order Now <ChevronRight className="w-4 h-4" />
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link
+                to="/preorder"
+                className="bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition flex items-center gap-2 font-medium"
+              >
+                Pre-order Now <ChevronRight className="w-4 h-4" />
+              </Link>
+              <button 
+                className="md:hidden flex items-center"
+                onClick={() => setMobileMenuOpen(true)}
+              >
+                <Menu className="w-6 h-6 text-gray-700" />
+              </button>
+            </div>
           </div>
         </div>
       </nav>
+
+      {/* Mobile Menu */}
+      <div className={`fixed inset-0 bg-black/50 z-50 transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className={`fixed inset-y-0 right-0 max-w-xs w-full bg-white shadow-xl transition-transform duration-300 transform ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="flex flex-col h-full overflow-y-auto">
+            <div className="flex items-center justify-between p-4 border-b">
+              <div className="flex items-center gap-2">
+                <Heart className="text-purple-800 w-6 h-6" />
+                <span className="text-xl font-bold text-purple-800">TheraIOT</span>
+              </div>
+              <button 
+                onClick={closeMobileMenu}
+                className="p-2 rounded-full hover:bg-gray-100"
+              >
+                <X className="w-5 h-5 text-gray-700" />
+              </button>
+            </div>
+            <div className="flex flex-col py-4">
+              <a
+                href="#features"
+                className="px-6 py-3 hover:bg-purple-50 text-gray-800"
+                onClick={closeMobileMenu}
+              >
+                Features
+              </a>
+              <a
+                href="#showcase"
+                className="px-6 py-3 hover:bg-purple-50 text-gray-800"
+                onClick={closeMobileMenu}
+              >
+                Showcase
+              </a>
+              <a
+                href="#pricing"
+                className="px-6 py-3 hover:bg-purple-50 text-gray-800"
+                onClick={closeMobileMenu}
+              >
+                Pricing
+              </a>
+              <Link
+                to="/invest"
+                className="px-6 py-3 hover:bg-purple-50 text-gray-800"
+                onClick={closeMobileMenu}
+              >
+                Invest
+              </Link>
+              <Link
+                to="/contact"
+                className="px-6 py-3 hover:bg-purple-50 text-gray-800"
+                onClick={closeMobileMenu}
+              >
+                Contact
+              </Link>
+              <div className="mt-4 px-4">
+                <Link
+                  to="/preorder"
+                  className="block w-full bg-purple-600 text-white px-6 py-3 rounded-full hover:bg-purple-700 transition text-center font-medium"
+                  onClick={closeMobileMenu}
+                >
+                  Pre-order Now
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Video Modal */}
       {videoPlaying && (
@@ -131,7 +234,7 @@ function LandingPage() {
                   className="border-2 border-purple-600 text-purple-600 px-8 py-3 rounded-full hover:bg-purple-50 transition text-lg font-medium flex items-center gap-2"
                 >
                   <Play className="w-5 h-5" /> Watch Demo
-                </button>
+                </button> 
               </div>
               <div className="mt-8 flex items-center gap-4">
                 <div className="flex -space-x-2">
@@ -155,9 +258,10 @@ function LandingPage() {
             <div className="relative">
               <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition duration-500">
                 <img
-                  src="/teddy2.webp"
+                  src="/images/teddy2.webp"
                   alt="AI Therapeutic Teddy Bear"
                   className="w-full h-auto rounded-2xl"
+                  onError={imgErrorHandler}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent"></div>
               </div>
@@ -272,9 +376,11 @@ function LandingPage() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="bg-gradient-to-br from-purple-100 to-white rounded-2xl overflow-hidden">
                 <img
-                  src="/DALL·E 2025-03-28 02.01.04 - A futuristic AI-powered therapeutic teddy bear and pillow designed for all ages, providing emotional support for both children and adults. The teddy b.webp"
+                  src="/images/children.webp"
                   alt="TheraIOT in action"
                   className="w-full h-auto rounded-2xl shadow-lg transform hover:scale-105 transition duration-500"
+                  onError={imgErrorHandler}
+                  loading="lazy"
                 />
               </div>
               <div>
@@ -320,7 +426,7 @@ function LandingPage() {
       </section>
 
       {/* Product Showcase Section */}
-      <section className="py-24 bg-gradient-to-b from-white to-purple-50">
+      <section id="showcase" className="py-24 bg-gradient-to-b from-white to-purple-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <span className="inline-flex items-center gap-2 bg-blue-100 px-4 py-2 rounded-full mb-4">
@@ -341,11 +447,13 @@ function LandingPage() {
           <div className="grid md:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
             <div className="relative aspect-square bg-gradient-to-br from-purple-100 to-indigo-50 rounded-2xl shadow-xl overflow-hidden">
               <img
-                src="/teddy-showcase.webp"
+                src="/images/3d.webp"
                 alt="TheraIOT Interactive 3D Model"
                 className="absolute inset-0 w-full h-full object-cover"
+                onError={imgErrorHandler}
+                loading="lazy"
               />
-              <div className="absolute inset-0 flex items-center justify-center">
+              {/* <div className="absolute inset-0 flex items-center justify-center">
                 <button
                   onClick={() => setVideoPlaying(true)}
                   className="bg-white/90 backdrop-blur-sm p-6 rounded-full shadow-lg hover:bg-white transition transform hover:scale-105"
@@ -358,7 +466,7 @@ function LandingPage() {
                     <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                   </svg>
                 </button>
-              </div>
+              </div> */}
             </div>
 
             <div className="space-y-8">
