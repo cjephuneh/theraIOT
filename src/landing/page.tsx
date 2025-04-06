@@ -229,12 +229,12 @@ function LandingPage() {
                 >
                   Pre-order Now <ChevronRight className="w-5 h-5" />
                 </Link>
-                <button
+                {/* <button
                   onClick={() => setVideoPlaying(true)}
                   className="border-2 border-purple-600 text-purple-600 px-8 py-3 rounded-full hover:bg-purple-50 transition text-lg font-medium flex items-center gap-2"
                 >
                   <Play className="w-5 h-5" /> Watch Demo
-                </button> 
+                </button>  */}
               </div>
               <div className="mt-8 flex items-center gap-4">
                 <div className="flex -space-x-2">
