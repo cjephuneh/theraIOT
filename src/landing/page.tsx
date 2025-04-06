@@ -8,7 +8,6 @@ import {
   CheckCircle2,
   Sparkles,
   Settings,
-  Play,
   X,
   ChevronRight,
   Users,
@@ -17,7 +16,6 @@ import {
   Briefcase,
   ArrowRight,
   Menu,
-  ImageOff
 } from 'lucide-react';
 
 // Helper function to handle image loading errors
