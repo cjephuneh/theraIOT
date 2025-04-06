@@ -44,6 +44,12 @@ function App() {
               <Link to="/invest" className="text-gray-600 hover:text-purple-600 font-medium">
                 Invest
               </Link>
+              <Link
+                to="/contact"
+                className="text-gray-600 hover:text-purple-600 font-medium"
+              >
+                Contact
+              </Link>
             </div>
             <Link to="/preorder" className="bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition flex items-center gap-2 font-medium">
               Pre-order Now <ChevronRight className="w-4 h-4" />

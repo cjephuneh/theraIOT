@@ -7,6 +7,7 @@ import './index.css';
 import LandingPage from './landing/page.tsx';
 import PreorderPage from './preorder/page.tsx';
 import InvestPage from './invest/page.tsx';
+import ContactPage from './contact/page.tsx'; // Import the new ContactPage
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<LandingPage />} />
         <Route path="/preorder" element={<PreorderPage />} />
         <Route path="/invest" element={<InvestPage />} />
+        <Route path="/contact" element={<ContactPage />} /> {/* Add this route */}
       </Routes>
     </Router>
   </StrictMode>
