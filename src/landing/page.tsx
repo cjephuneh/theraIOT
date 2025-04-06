@@ -149,7 +149,7 @@ function LandingPage() {
             <div className="relative">
               <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition duration-500">
                 <img
-                  src="../teddy2.webp"
+                  src="/teddy2.webp"
                   alt="AI Therapeutic Teddy Bear"
                   className="w-full h-auto rounded-2xl"
                 />
@@ -266,7 +266,7 @@ function LandingPage() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="bg-gradient-to-br from-purple-100 to-white rounded-2xl overflow-hidden">
                 <img
-                  src="../DALL·E 2025-03-28 02.01.04 - A futuristic AI-powered therapeutic teddy bear and pillow designed for all ages, providing emotional support for both children and adults. The teddy b.webp"
+                  src="/DALL·E 2025-03-28 02.01.04 - A futuristic AI-powered therapeutic teddy bear and pillow designed for all ages, providing emotional support for both children and adults. The teddy b.webp"
                   alt="TheraIOT in action"
                   className="w-full h-auto rounded-2xl shadow-lg transform hover:scale-105 transition duration-500"
                 />
@@ -335,7 +335,7 @@ function LandingPage() {
           <div className="grid md:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
             <div className="relative aspect-square bg-gradient-to-br from-purple-100 to-indigo-50 rounded-2xl shadow-xl overflow-hidden">
               <img
-                src="../teddy-showcase.webp"
+                src="/teddy-showcase.webp"
                 alt="TheraIOT Interactive 3D Model"
                 className="absolute inset-0 w-full h-full object-cover"
               />

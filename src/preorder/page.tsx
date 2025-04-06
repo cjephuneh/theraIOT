@@ -9,7 +9,27 @@ import {
   Truck
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { submitPreorder } from '../utils/appwrite';
+import { submitPreorder } from '../utils/api'; // Changed from appwrite to api
+
+// Define TypeScript interfaces for better type safety
+interface PreorderData {
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+  city: string;
+  zipCode: string;
+  country: string;
+  additionalNotes: string;
+  selectedPackage: string | null;
+  registrationDate: string;
+  status: string;
+}
+
+interface PreorderResponse {
+  success: boolean;
+  registrationId: string;
+}
 
 function PreorderPage() {
   const [step, setStep] = useState(1);
@@ -50,8 +70,8 @@ function PreorderPage() {
     setIsSubmitting(true);
     
     try {
-      // Prepare data for Appwrite
-      const preorderData = {
+      // Prepare data for API
+      const preorderData: PreorderData = {
         fullName: formData.fullName,
         email: formData.email,
         phoneNumber: formData.phoneNumber,
@@ -65,10 +85,16 @@ function PreorderPage() {
         status: 'registered' // You can use this field to track status (registered, contacted, etc.)
       };
       
-      // Submit to Appwrite
+      // Log data being sent to API for debugging
+      console.log('Submitting preorder data:', preorderData);
+      
+      // Submit to Azure API
       const result = await submitPreorder(preorderData);
       
-      // Set the registration ID from Appwrite
+      // Log API response for debugging
+      console.log('API response:', result);
+      
+      // Set the registration ID from API response
       setRegistrationId(result.registrationId);
       
       // Show success state
@@ -76,7 +102,13 @@ function PreorderPage() {
       window.scrollTo(0, 0);
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("There was an error submitting your information. Please try again.");
+      
+      // Check for network errors
+      if (!navigator.onLine) {
+        alert("You appear to be offline. Please check your internet connection and try again.");
+      } else {
+        alert("There was an error submitting your information. Please try again.");
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -407,7 +439,13 @@ function PreorderPage() {
                         className="px-8 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition flex items-center gap-2 disabled:opacity-70"
                       >
                         {isSubmitting ? (
-                          <>Processing...</>
+                          <div className="flex items-center">
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Processing...
+                          </div>
                         ) : (
                           <>Submit Registration <ArrowRight className="w-4 h-4" /></>
                         )}

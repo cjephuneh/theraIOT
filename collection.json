@@ -1,0 +1,483 @@
+{
+  "info": {
+    "_postman_id": "c2a9f7e3-63c7-4d91-b9fc-80ebfc3d5a67",
+    "name": "TheraIOT API Tests",
+    "description": "Tests for TheraIOT backend API running on Azure",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"API is running message received\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('message');",
+              "    pm.expect(jsonData.message).to.include('running');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://theraiot-server-a6ggd6dffmcrc3dg.eastus-01.azurewebsites.net/",
+          "protocol": "https",
+          "host": [
+            "theraiot-server-a6ggd6dffmcrc3dg",
+            "eastus-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            ""
+          ]
+        },
+        "description": "Basic health check to verify API is running"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Preorder - Standard Package",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Preorder submission successful\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData).to.have.property('registrationId');",
+              "    ",
+              "    // Save the registration ID for potential future tests",
+              "    pm.collectionVariables.set(\"last_preorder_id\", jsonData.registrationId);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"fullName\": \"Test Customer\",\n    \"email\": \"test@example.com\",\n    \"phoneNumber\": \"+1234567890\",\n    \"address\": \"123 Test Street\",\n    \"city\": \"Test City\",\n    \"zipCode\": \"12345\",\n    \"country\": \"Test Country\",\n    \"additionalNotes\": \"This is a test preorder from Postman\",\n    \"selectedPackage\": \"standard\",\n    \"registrationDate\": \"{{$isoTimestamp}}\"\n}"
+        },
+        "url": {
+          "raw": "https://theraiot-server-a6ggd6dffmcrc3dg.eastus-01.azurewebsites.net/api/preorders",
+          "protocol": "https",
+          "host": [
+            "theraiot-server-a6ggd6dffmcrc3dg",
+            "eastus-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "preorders"
+          ]
+        },
+        "description": "Submit a standard package preorder"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Preorder - Premium Package",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Preorder submission successful\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData).to.have.property('registrationId');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"fullName\": \"Premium Customer\",\n    \"email\": \"premium@example.com\",\n    \"phoneNumber\": \"+1987654321\",\n    \"address\": \"456 Premium Avenue\",\n    \"city\": \"Premium City\",\n    \"zipCode\": \"54321\",\n    \"country\": \"Premium Country\",\n    \"additionalNotes\": \"This is a premium package test preorder\",\n    \"selectedPackage\": \"premium\",\n    \"registrationDate\": \"{{$isoTimestamp}}\"\n}"
+        },
+        "url": {
+          "raw": "https://theraiot-server-a6ggd6dffmcrc3dg.eastus-01.azurewebsites.net/api/preorders",
+          "protocol": "https",
+          "host": [
+            "theraiot-server-a6ggd6dffmcrc3dg",
+            "eastus-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "preorders"
+          ]
+        },
+        "description": "Submit a premium package preorder"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Preorder - Family Package",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Preorder submission successful\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData).to.have.property('registrationId');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"fullName\": \"Family Customer\",\n    \"email\": \"family@example.com\",\n    \"phoneNumber\": \"+1555666777\",\n    \"address\": \"789 Family Road\",\n    \"city\": \"Family City\",\n    \"zipCode\": \"67890\",\n    \"country\": \"Family Country\",\n    \"additionalNotes\": \"This is a family package test preorder\",\n    \"selectedPackage\": \"family\",\n    \"registrationDate\": \"{{$isoTimestamp}}\"\n}"
+        },
+        "url": {
+          "raw": "https://theraiot-server-a6ggd6dffmcrc3dg.eastus-01.azurewebsites.net/api/preorders",
+          "protocol": "https",
+          "host": [
+            "theraiot-server-a6ggd6dffmcrc3dg",
+            "eastus-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "preorders"
+          ]
+        },
+        "description": "Submit a family package preorder"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Preorder - Invalid Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 or 422\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([400, 422]);",
+              "});",
+              "",
+              "pm.test(\"Error message received\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "    pm.expect(jsonData).to.have.property('error');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"invalid@example.com\",\n    \"phoneNumber\": \"+1234567890\",\n    \"selectedPackage\": \"invalid-package\"\n}"
+        },
+        "url": {
+          "raw": "https://theraiot-server-a6ggd6dffmcrc3dg.eastus-01.azurewebsites.net/api/preorders",
+          "protocol": "https",
+          "host": [
+            "theraiot-server-a6ggd6dffmcrc3dg",
+            "eastus-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "preorders"
+          ]
+        },
+        "description": "Submit an invalid preorder (missing fullName and invalid package type)"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Investment - Investor",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Investment submission successful\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData).to.have.property('submissionId');",
+              "    ",
+              "    // Save the submission ID for potential future tests",
+              "    pm.collectionVariables.set(\"last_investment_id\", jsonData.submissionId);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"fullName\": \"Investor Contact\",\n    \"email\": \"investor@example.com\",\n    \"phoneNumber\": \"+1000111222\",\n    \"company\": \"Investment Corp\",\n    \"role\": \"Angel Investor\",\n    \"message\": \"I'm interested in funding the early stages of TheraIOT\",\n    \"interestType\": \"investor\",\n    \"investmentAmount\": 50000,\n    \"submissionDate\": \"{{$isoTimestamp}}\"\n}"
+        },
+        "url": {
+          "raw": "https://theraiot-server-a6ggd6dffmcrc3dg.eastus-01.azurewebsites.net/api/investments",
+          "protocol": "https",
+          "host": [
+            "theraiot-server-a6ggd6dffmcrc3dg",
+            "eastus-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "investments"
+          ]
+        },
+        "description": "Submit an investment interest as an investor type"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Investment - Engineer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Investment submission successful\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData).to.have.property('submissionId');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"fullName\": \"Engineer Contact\",\n    \"email\": \"engineer@example.com\",\n    \"phoneNumber\": \"+1333444555\",\n    \"company\": \"Tech Solutions Ltd\",\n    \"role\": \"Senior AI Engineer\",\n    \"message\": \"I would like to contribute my expertise in AI and IoT to your project\",\n    \"interestType\": \"engineer\",\n    \"investmentAmount\": 0,\n    \"submissionDate\": \"{{$isoTimestamp}}\"\n}"
+        },
+        "url": {
+          "raw": "https://theraiot-server-a6ggd6dffmcrc3dg.eastus-01.azurewebsites.net/api/investments",
+          "protocol": "https",
+          "host": [
+            "theraiot-server-a6ggd6dffmcrc3dg",
+            "eastus-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "investments"
+          ]
+        },
+        "description": "Submit an investment interest as an engineer type"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Investment - Business Partner",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Investment submission successful\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData).to.have.property('submissionId');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"fullName\": \"Business Contact\",\n    \"email\": \"business@example.com\",\n    \"phoneNumber\": \"+1777888999\",\n    \"company\": \"Global Distribution Inc\",\n    \"role\": \"Business Development Manager\",\n    \"message\": \"I'm interested in discussing distribution partnerships for TheraIOT products\",\n    \"interestType\": \"business\",\n    \"investmentAmount\": 0,\n    \"submissionDate\": \"{{$isoTimestamp}}\"\n}"
+        },
+        "url": {
+          "raw": "https://theraiot-server-a6ggd6dffmcrc3dg.eastus-01.azurewebsites.net/api/investments",
+          "protocol": "https",
+          "host": [
+            "theraiot-server-a6ggd6dffmcrc3dg",
+            "eastus-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "investments"
+          ]
+        },
+        "description": "Submit an investment interest as a business partner type"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Investment - Invalid Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 or 422\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([400, 422]);",
+              "});",
+              "",
+              "pm.test(\"Error message received\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "    pm.expect(jsonData).to.have.property('error');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"invalid@example.com\",\n    \"interestType\": \"invalid-type\"\n}"
+        },
+        "url": {
+          "raw": "https://theraiot-server-a6ggd6dffmcrc3dg.eastus-01.azurewebsites.net/api/investments",
+          "protocol": "https",
+          "host": [
+            "theraiot-server-a6ggd6dffmcrc3dg",
+            "eastus-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "investments"
+          ]
+        },
+        "description": "Submit an invalid investment interest (missing fullName and invalid interest type)"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "last_preorder_id",
+      "value": ""
+    },
+    {
+      "key": "last_investment_id",
+      "value": ""
+    }
+  ]
+}
