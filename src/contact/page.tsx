@@ -215,7 +215,7 @@ function ContactPage() {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Email</h3>
                 <p className="text-gray-600 mb-3">For general inquiries</p>
-                <a href="mailto:hello@theraiot.com" className="text-purple-600 font-medium">hello@theraiot.com</a>
+                <a href="mailto:hello@theraiot.com" className="text-purple-600 font-medium">support@bricklabsai.org</a>
               </div>
               
               <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
@@ -224,7 +224,7 @@ function ContactPage() {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Phone</h3>
                 <p className="text-gray-600 mb-3">Monday-Friday, 9am-5pm EST</p>
-                <a href="tel:+1-800-THERAIOT" className="text-purple-600 font-medium">+1-800-THERAIOT</a>
+                <a href="tel: +254708419386" className="text-purple-600 font-medium">+254708419386</a>
               </div>
               
               <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
@@ -234,7 +234,8 @@ function ContactPage() {
                 <h3 className="text-xl font-semibold mb-2">Office</h3>
                 <p className="text-gray-600 mb-3">Our headquarters</p>
                 <address className="not-italic text-purple-600 font-medium">
-                  Menlo Park, CA 94025
+                  KMA Center, 2nd Floor<br />
+                  2nd Ngong Avenue, Nairobi, Kenya<br />
                 </address>
               </div>
             </div>

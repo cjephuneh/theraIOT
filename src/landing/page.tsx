@@ -56,6 +56,12 @@ function LandingPage() {
               >
                 Invest
               </Link>
+              <Link
+                to="/contact"
+                className="text-gray-600 hover:text-purple-600 font-medium"
+              >
+                Contact
+              </Link>
             </div>
             <Link
               to="/preorder"
