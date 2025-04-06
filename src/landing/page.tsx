@@ -992,9 +992,9 @@ function LandingPage() {
               >
                 Pre-order Now
               </Link>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-purple-500 transition">
+              {/* <button className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-purple-500 transition">
                 Download Brochure
-              </button>
+              </button> */}
             </div>
             <div className="mt-8 p-4 bg-white/10 rounded-xl inline-block">
               <div className="flex items-center gap-2">
