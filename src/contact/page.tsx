@@ -14,6 +14,7 @@ import {
   Clock,
   AlertCircle
 } from 'lucide-react';
+import { submitContact } from '../utils/api'; // Import the API function
 
 interface ContactFormData {
   fullName: string;
@@ -35,6 +36,7 @@ function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [contactId, setContactId] = useState<string>('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -46,7 +48,7 @@ function ContactPage() {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    // Validate form fields
+    // Validate required fields
     if (!formData.fullName || !formData.email || !formData.message) {
       setSubmitError("Please fill in all required fields");
       setIsSubmitting(false);
@@ -54,32 +56,77 @@ function ContactPage() {
     }
 
     try {
-      // Here you would typically send the data to your backend API
-      // For now we'll just simulate a successful submission
-      console.log('Sending contact form data:', formData);
+      // Prepare data for API
+      const contactData = {
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone || '',
+        subject: formData.subject || 'General Inquiry',
+        message: formData.message,
+        submissionDate: new Date().toISOString(),
+        status: 'new'
+      };
       
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      console.log('Sending contact form data:', contactData);
       
-      // Handle successful submission
-      setSubmitSuccess(true);
+      // Submit to API
+      const result = await submitContact(contactData);
       
-      // Reset form
-      setFormData({
-        fullName: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      });
-      
-      // Scroll to top of page
-      window.scrollTo(0, 0);
+      // Check response
+      if (result.success) {
+        // Track the submission
+        trackFormSubmission(formData.subject);
+        
+        // Store the contact ID for confirmation message
+        setContactId(result.contactId);
+        
+        // Show success state
+        setSubmitSuccess(true);
+        
+        // Reset form
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+        
+        // Scroll to top of page
+        window.scrollTo(0, 0);
+      } else {
+        throw new Error('API returned success: false');
+      }
     } catch (error) {
       console.error('Error submitting contact form:', error);
-      setSubmitError("There was a problem submitting your form. Please try again.");
+      
+      // Check for network issues
+      if (!navigator.onLine) {
+        setSubmitError("You appear to be offline. Please check your internet connection and try again.");
+      } else if (error instanceof Error && error.message.includes('Failed to fetch')) {
+        setSubmitError("Unable to reach our servers. Please try again later or contact us directly at hello@theraiot.com");
+      } else {
+        setSubmitError("There was a problem submitting your form. Please try again or email us directly.");
+      }
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const trackFormSubmission = (subject: string) => {
+    try {
+      // If you're using Google Analytics
+      if (window.gtag) {
+        window.gtag('event', 'contact_form_submission', {
+          'event_category': 'engagement',
+          'event_label': subject || 'General Inquiry'
+        });
+      }
+      
+      // If you're using a custom analytics solution, add it here
+      console.log('Form submission tracked', { subject });
+    } catch (e) {
+      console.error('Error tracking form submission:', e);
     }
   };
 
@@ -111,6 +158,7 @@ function ContactPage() {
               We've received your message and will get back to you as soon as possible.
             </p>
             <p className="text-gray-600 mb-8">
+              Your contact reference number is: <span className="font-semibold">{contactId}</span><br />
               A confirmation has been sent to <span className="font-semibold">{formData.email}</span>. 
               Our team typically responds within 24-48 business hours.
             </p>
